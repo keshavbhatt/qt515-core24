@@ -111,7 +111,7 @@ parts:
     override-build: |
       set -eux
       mkdir -p build && cd build
-     cmake -DCMAKE_INSTALL_PREFIX=${SNAPCRAFT_PART_INSTALL}/usr \
+      cmake -DCMAKE_INSTALL_PREFIX=${SNAPCRAFT_PART_INSTALL}/usr \
            -DCMAKE_BUILD_TYPE=Release \
            -DCMAKE_PREFIX_PATH=/usr \
            $SNAPCRAFT_PART_SRC
