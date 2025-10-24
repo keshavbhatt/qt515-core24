@@ -42,6 +42,7 @@ parts:
       - shared-mime-info
       #- ttf-ubuntu-font-family
       - xdg-user-dirs
+      - qtwayland5
 
       # input methods
       - ibus-gtk3
