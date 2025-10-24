@@ -1,0 +1,128 @@
+name: qt515-core24
+base: core24
+version: '5.15.4'
+summary: Qt5.15 runtime for core24
+description: |
+  This snap is to be consumed by various Qt apps which use Qt 5.15 as their runtime.
+
+grade: stable
+confinement: strict
+compression: lzo
+
+# Use platforms instead of architectures
+platforms:
+  amd64:
+    build-on: [amd64]
+    build-for: [amd64]
+
+slots:
+  qt515-core24:
+    interface: content
+    read:
+      - /
+
+parts:
+  qt515:
+    plugin: nil
+    stage-packages:
+      - adwaita-icon-theme
+      - dmz-cursor-theme
+      - fontconfig
+      - gnome-themes-standard
+      - freeglut3
+      - libgdk-pixbuf-2.0-0
+      - libglib2.0-0
+      - libglu1-mesa
+      - libgtk2.0-0
+      - libice6
+      - libxkbcommon0
+      - light-themes
+      - locales-all
+      - shared-mime-info
+      - ttf-ubuntu-font-family
+      - xdg-user-dirs
+
+      # input methods
+      - ibus-gtk3
+      - fcitx
+      - fcitx-module-dbus
+      - libfcitx-gclient1
+      - libfcitx-utils0
+      - libibus-1.0-5
+      - libcanberra-gtk3-module
+      - glib-networking
+
+      # Qt 5.15 components (from official Ubuntu 24.04 repo)
+      - qtbase5-dev
+      - qtchooser
+      - qt5-qmake
+      - qtdeclarative5-dev
+      - qtmultimedia5-dev
+      - qttools5-dev
+      - qtquickcontrols2-5-dev
+      - qtgraphicaleffects5
+      - qml-module-qtwebchannel
+      - qml-module-qtwebengine
+      - qml-module-qtquick-controls
+      - qml-module-qtquick-controls2
+      - qml-module-qtgraphicaleffects
+      - qml-module-qt-labs-platform
+      - qml-module-qtqml-models2
+      - qml-module-qtqml-statemachine
+      - qml-module-qtwebsockets
+
+      # Multimedia
+      - gstreamer1.0-plugins-good
+      - gstreamer1.0-plugins-bad
+      - gstreamer1.0-alsa
+      - gstreamer1.0-pulseaudio
+      - gstreamer1.0-libav
+      - gstreamer1.0-x
+      - gstreamer1.0-gl
+
+      # Additional runtime tools
+      - mpv
+      - ffmpeg
+      - socat
+      - wget
+      - xclip
+      - libtag1v5
+
+  adwaita-qt:
+    after:
+      - qt515
+    plugin: cmake
+    source: https://github.com/keshavbhatt/adwaita-qt.git
+    build-packages:
+      - build-essential
+      - qtbase5-dev
+      - libgl1-mesa-dev
+      - libx11-dev
+      - libx11-xcb-dev
+      - libxcb1-dev
+    override-build: |
+      set -eux
+      mkdir -p build && cd build
+      cmake -DCMAKE_INSTALL_PREFIX:PATH=${SNAPCRAFT_PART_INSTALL}/usr \
+            -DCMAKE_BUILD_TYPE=Release $SNAPCRAFT_PART_SRC
+      make -j$(nproc)
+      make install
+    prime:
+      - -usr/share/doc
+      - -usr/include
+      - -usr/lib/cmake
+      - -usr/lib/pkgconfig
+
+  cleanup:
+    after:
+      - adwaita-qt
+    plugin: nil
+    override-prime: |
+      set -eux
+      for CRUFT in doc examples include man; do
+        rm -rf $SNAPCRAFT_PRIME/usr/share/$CRUFT || true
+        rm -rf $SNAPCRAFT_PRIME/usr/$CRUFT || true
+      done
+      find $SNAPCRAFT_PRIME/usr -name "*.a" -delete
+      find $SNAPCRAFT_PRIME/usr -name "*.la" -delete
+      find $SNAPCRAFT_PRIME/usr -type d -empty -delete
