@@ -96,18 +96,25 @@ parts:
     source: https://github.com/keshavbhatt/adwaita-qt.git
     build-packages:
       - build-essential
+      - cmake
       - qtbase5-dev
+      - libqt5x11extras5-dev
+      - qtmultimedia5-dev
+      - qttools5-dev
       - libgl1-mesa-dev
       - libx11-dev
       - libx11-xcb-dev
       - libxcb1-dev
+      - pkg-config
       - libpkgconf3
-      - libqt5x11extras5-dev
+
     override-build: |
       set -eux
       mkdir -p build && cd build
-      cmake -DCMAKE_INSTALL_PREFIX:PATH=${SNAPCRAFT_PART_INSTALL}/usr \
-            -DCMAKE_BUILD_TYPE=Release $SNAPCRAFT_PART_SRC
+     cmake -DCMAKE_INSTALL_PREFIX=${SNAPCRAFT_PART_INSTALL}/usr \
+           -DCMAKE_BUILD_TYPE=Release \
+           -DCMAKE_PREFIX_PATH=/usr \
+           $SNAPCRAFT_PART_SRC
       make -j$(nproc)
       make install
     prime:
