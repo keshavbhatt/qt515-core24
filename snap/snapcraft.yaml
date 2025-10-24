@@ -54,6 +54,7 @@ parts:
 
       # Qt 5.15 components (from official Ubuntu 24.04 repo)
       - qtbase5-dev
+      - libqt5x11extras5
       - qtchooser
       - qt5-qmake
       - qtdeclarative5-dev
@@ -100,6 +101,8 @@ parts:
       - libx11-dev
       - libx11-xcb-dev
       - libxcb1-dev
+      - libpkgconf3
+      - libqt5x11extras5-dev
     override-build: |
       set -eux
       mkdir -p build && cd build
