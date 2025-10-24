@@ -34,6 +34,7 @@ parts:
       - libglib2.0-0t64 #- libglib2.0-0
       - libglu1-mesa
       - libgtk2.0-0t64 #- libgtk2.0-0
+      - libgtk-3-0t64
       - libice6
       - libxkbcommon0
       - light-themes
@@ -51,16 +52,18 @@ parts:
       - libibus-1.0-5
       - libcanberra-gtk3-module
       - glib-networking
+      - libproxy1v5
 
       # Qt 5.15 components (from official Ubuntu 24.04 repo)
-      - qtbase5-dev
+      #- qtbase5-dev
       - libqt5x11extras5
       - qtchooser
       - qt5-qmake
-      - qtdeclarative5-dev
-      - qtmultimedia5-dev
-      - qttools5-dev
-      - qtquickcontrols2-5-dev
+      #- qtdeclarative5-dev
+      #- qtmultimedia5-dev
+      #- qttools5-dev
+      #- qtquickcontrols2-5-dev
+      - libqt5webenginewidgets5
       - qml-module-qtgraphicaleffects #- qtgraphicaleffects5
       - qml-module-qtwebchannel
       - qml-module-qtwebengine
