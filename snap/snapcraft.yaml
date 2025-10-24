@@ -29,17 +29,17 @@ parts:
       - dmz-cursor-theme
       - fontconfig
       #- gnome-themes-standard
-      - freeglut3
+      - freeglut3-dev #- freeglut3
       - libgdk-pixbuf-2.0-0
-      #- libglib2.0-0
+      - libglib2.0-0t64 #- libglib2.0-0
       - libglu1-mesa
-      #- libgtk2.0-0
+      - libgtk2.0-0t64 #- libgtk2.0-0
       - libice6
       - libxkbcommon0
       - light-themes
       - locales-all
       - shared-mime-info
-      - ttf-ubuntu-font-family
+      #- ttf-ubuntu-font-family
       - xdg-user-dirs
 
       # input methods
@@ -60,7 +60,7 @@ parts:
       - qtmultimedia5-dev
       - qttools5-dev
       - qtquickcontrols2-5-dev
-      - qtgraphicaleffects5
+      - qml-module-qtgraphicaleffects #- qtgraphicaleffects5
       - qml-module-qtwebchannel
       - qml-module-qtwebengine
       - qml-module-qtquick-controls
